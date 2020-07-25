@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,10 +8,9 @@
     <title>Roche Login</title>
     <script src="jquery.min.js"></script>
     <script type="text/javascript">
-      $(function() {
-        $('#submit').click(function() {
+      $(function () {
+        $('#submit').click(function () {
           if ($('#client').val() && $('#password').val()) {
-
             window.parent.postMessage(
               JSON.stringify({
                 event_code: 'ym-client-event',
@@ -21,27 +19,46 @@
                     code: 'auth',
                     data: {
                       userid: $('#client').val(),
-                      password: $('#password').val()
-                    }
-                  }
-                })
+                      password: $('#password').val(),
+                    },
+                  },
+                }),
               }),
-              '*'
+              '*',
             );
 
-            $('#custom :input').attr('disabled', 'disabled')
-            $('#custom').fadeTo('slow', 0.15, function() {
-              $(this)
-                .find(':input')
-                .attr('disabled', 'disabled')
-              $(this)
-                .find('label')
-                .css('cursor', 'default')
-              $('#add').append('Details Submitted')
-            })
+            $('#custom :input').attr('disabled', 'disabled');
+            $('#custom').fadeTo('slow', 0.15, function () {
+              $(this).find(':input').attr('disabled', 'disabled');
+              $(this).find('label').css('cursor', 'default');
+              $('#add').append('Details Submitted');
+            });
           }
-        })
-      })
+        });
+        $('#register').click(function (event) {
+          event.preventDefault();
+          window.parent.postMessage(
+            JSON.stringify({
+              event_code: 'ym-client-event',
+              data: JSON.stringify({
+                event: {
+                  code: 'register',
+                  data: {
+                    register: true,
+                  },
+                },
+              }),
+            }),
+            '*',
+          );
+          $('#custom :input').attr('disabled', 'disabled');
+          $('#custom').fadeTo('slow', 0.15, function () {
+            $(this).find(':input').attr('disabled', 'disabled');
+            $(this).find('label').css('cursor', 'default');
+            $('#add').append('Details Submitted');
+          });
+        });
+      });
     </script>
   </head>
 
@@ -49,24 +66,13 @@
     <div id="custom" class="container Absolute-Center">
       <h1>Login</h1>
       <form action="#" method="POST">
-        <input
-          type="text"
-          id="client"
-          name="client"
-          placeholder="username"
-          class="field"
-          required
-        />
-        <input
-          type="password"
-          id="password"
-          name="pwd"
-          placeholder="password"
-          class="field"
-          required
-        />
+        <input type="text" id="client" name="client" placeholder="username" class="field" required />
+        <input type="password" id="password" name="pwd" placeholder="password" class="field" required />
         <input type="submit" id="submit" value="login" class="btn" />
       </form>
+      <div class="RegisterAccess">
+        <a href="" id="register">Register for Access</a>
+      </div>
     </div>
   </body>
 </html>
